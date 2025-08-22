@@ -33,19 +33,32 @@ class UserDb:
             all_users.append(user)
 
         return all_users
-    
 
-
-    def add_user(self, user):
+    def add(self, user):
         with sqlite3.connect(db_file) as conn:
             cursor = conn.cursor()
             cursor = conn.cursor()
             cursor.execute("""
             INSERT INTO users (name, family, role, hourly_rate, salary)
             VALUES (?, ?, ?, ?, ?)
-            """, (user.name, user.family, user.role, user.hourly_rate, user.calc_salary()))
-
+            """, (user.name, user.family, user.role, user.hourly_rate, user.salary))
             conn.commit()
+            user.id = cursor.lastrowid
+
+
+    def delete(self, user):
+        with sqlite3.connect(db_file) as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+        DELETE FROM users WHERE id=?
+        """, (user.id,))
+            
+    def update(self, user):
+        with sqlite3.connect(db_file) as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+            UPDATE uesrs SET name=?, family=?, role=?, hourly_rate=?, salary=? WHERE id=?
+            """, (user.name, user.family, user.role, user.hourly_rate, user.salary, user.id))
 
 
 

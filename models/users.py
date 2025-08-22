@@ -2,12 +2,13 @@ import datetime
 from db import UserDb
 
 class User:
-    def __init__(self, name, family, hourly_rate, total_hour, total_minute):
+    def __init__(self,name, family, hourly_rate, total_hour, total_minute, id=None):
         self.name = name
         self.family = family
         self.hourly_rate = hourly_rate
         self.total_hour = total_hour
         self.total_minute = total_minute
+        self.salary = self.calc_salary()
 
 
     def full_name(self):
@@ -52,8 +53,8 @@ class Cost:
 # print(getattr(user, 'role'))
 # print(help(user))
 
-userdb = UserDb()
-userdb.init_db()
+# userdb = UserDb()
+# userdb.init_db()
 
 # dev1 = Developer('saeed', 'nazari', 2000000, 12, 43)
 # print(dev1)
