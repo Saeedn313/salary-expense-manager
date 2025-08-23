@@ -1,13 +1,11 @@
-import sqlite3
+from base_db import DataBase
 
-db_file = 'hello.db'
 
-class UserDb:
-    def __init__(self):
-        self.init_db()
 
-    def init_db(self):
-        with sqlite3.connect(db_file) as conn:
+class UserDb(DataBase):
+
+    def create_table(self):
+        with self.init_db() as conn:
             cursor = conn.cursor()
             cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
@@ -24,7 +22,7 @@ class UserDb:
             conn.commit()
 
     def fetch_all(self):
-        with sqlite3.connect(db_file) as conn:
+        with self.init_db() as conn:
             cursor = conn.cursor()
             rows = cursor.execute("""
         SELECT * FROM users
@@ -33,7 +31,7 @@ class UserDb:
         return rows
 
     def add(self, user):
-        with sqlite3.connect(db_file) as conn:
+        with self.init_db() as conn:
             cursor = conn.cursor()
             cursor = conn.cursor()
             cursor.execute("""
@@ -45,14 +43,14 @@ class UserDb:
 
 
     def delete(self, user_id):
-        with sqlite3.connect(db_file) as conn:
+        with self.init_db() as conn:
             cursor = conn.cursor()
             cursor.execute("""
         DELETE FROM users WHERE id=?
         """, (user_id,))
             
     def update(self, user):
-        with sqlite3.connect(db_file) as conn:
+        with self.init_db() as conn:
             cursor = conn.cursor()
             cursor.execute("""
             UPDATE uesrs SET name=?, family=?, role=?, hourly_rate=?,total_hour=?, total_minute=?, salary=? WHERE id=?
@@ -60,19 +58,4 @@ class UserDb:
 
 
 
-class CostDb:
-    def __init__(self):
-        self.init_db()
 
-    def init_db(self):
-        with sqlite3.connect(db_file) as conn:
-            cursor = conn.cursor()    
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS costs (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    title TEXT,
-                    category TEXT,
-                    amount INTEGER,
-                    date_added TEXT  
-                    )
-                """)

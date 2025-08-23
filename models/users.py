@@ -1,5 +1,4 @@
-import datetime
-from db import UserDb
+from db.user_db import UserDb
 
 class User:
     def __init__(self,name, family, hourly_rate, total_hour, total_minute, id=None):
@@ -53,15 +52,7 @@ class Manager(User):
         self.role = 'Manager'
 
 
-class Cost:
-    def __init__(self, title, category, amount):
-        self.title = title
-        self.category = category
-        self.amount = amount
-        self.date_added = datetime.datetime.now()
 
-    def __str__(self):
-        return f'{self.title} - {self.amount}'
 
 # dev1 = Developer('hassan', 'hassani', 200000, 12, 30)
 # print(dev1.full_name())
